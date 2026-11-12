@@ -1,8 +1,8 @@
 import java.util.*;
-import java.io.*;
 
-public class CheckingAccount implements HasMenu, Serializable {
-	double balance;
+public class CheckingAccount implements HasMenu {
+	private double balance;
+	public static Scanner input = new Scanner(System.in);
 
 	public static void main(String[] args){
 		CheckingAccount ca = new CheckingAccount();
@@ -18,7 +18,6 @@ public class CheckingAccount implements HasMenu, Serializable {
 	}
 
 	public String menu(){
-		Scanner input = new Scanner(System.in);
 		System.out.println();
 		System.out.println("0) Quit ");
 		System.out.println("1) Check Balance ");
@@ -28,8 +27,9 @@ public class CheckingAccount implements HasMenu, Serializable {
 		return response;
 	} // end menu
 	
-	public String start(){
+	public void start(){
 		boolean keepGoing = true;
+		String response;
 		while (keepGoing){
 			response = menu();
 			if (response.equals("0")){
@@ -41,13 +41,47 @@ public class CheckingAccount implements HasMenu, Serializable {
 				System.out.println("Making deposit...");
 				makeDeposit();
 			} else if (response.equals("3")){
-				System.out.println("Making withdrawal...")
+				System.out.println("Making withdrawal...");
+				makeWithdrawal();
 			} else{
 				System.out.println("Please print a number 0-3: ");
 			}
 		}
 	} // end start
 	
+	public String getBalanceString(){
+        	return String.format("$%.2f", this.balance);
+    	}
 
+	public void checkBalance(){
+		System.out.println("Balance: " + this.getBalanceString());
+	}
 
+	private double getDouble(){
+  		double d = input.nextDouble();
+		input.nextLine();
+		return d;
+    	}
+	
+	public void makeDeposit(){
+		System.out.println("How much to deposit? ");
+		double deposit = getDouble();
+		this.balance += deposit;
+		System.out.println("New balance: " + getBalanceString());
+	}
 
+	public void makeWithdrawal(){
+		System.out.println("How much ot withdraw? ");
+		double withdrawal = getDouble();
+		this.balance -= withdrawal;
+		System.out.println("New balance: " + getBalanceString());
+	}
+
+	public double getBalance(){
+		return balance;
+	}
+
+	public void setBalance(double b){
+		this.balance = b;
+	}
+}

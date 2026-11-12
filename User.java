@@ -1,7 +1,8 @@
 import java.util.*;
 import java.io.*;
 
-public abstract class User implements HasMenu, Serializable {
+
+public abstract class User implements HasMenu, Serializable{
 	protected String userName;
 	protected String PIN;
 
@@ -26,6 +27,23 @@ public abstract class User implements HasMenu, Serializable {
 	public boolean login(String u, String p)
 	{
 		return (u.equals(this.userName) && p.equals(this.PIN));
+	}
+
+	public User(String username, String pin){
+		this.userName = username;
+		this.PIN = pin;
+	}
+
+	public boolean login() {
+    		Scanner input = new Scanner(System.in);
+
+    		System.out.print("Username: ");
+    		String u = input.nextLine();
+
+    		System.out.print("PIN: ");
+    		String p = input.nextLine();
+
+    	return login(u, p);
 	}
 
 	public abstract String getReport();
